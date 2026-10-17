@@ -21,6 +21,9 @@
   },
   "homepage": "https://github.com/zoekovac/101107123_COMP3123_Assignment1#readme",
   "dependencies": {
-    "express": "^5.3.0"
+    "dotenv": "^18.0.8",
+    "express": "^5.3.0",
+    "helmet": "^8.3.0",
+    "mongoose": "^9.11.2"
   }
 }
