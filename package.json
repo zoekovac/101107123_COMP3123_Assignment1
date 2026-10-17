@@ -1,0 +1,24 @@
+{
+  "name": "101107123_comp3123_assignment1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zoekovac/101107123_COMP3123_Assignment1.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zoekovac/101107123_COMP3123_Assignment1/issues"
+  },
+  "homepage": "https://github.com/zoekovac/101107123_COMP3123_Assignment1#readme",
+  "dependencies": {
+    "express": "^5.3.0"
+  }
+}
