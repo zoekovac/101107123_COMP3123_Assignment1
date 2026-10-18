@@ -6,8 +6,9 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "newman run postman/101107123_comp3123_assignment1.postman_collection.json --env-var baseUrl=http://localhost:3020"
   },
+
   "keywords": [],
   "author": "Zoë Kovac",
   "license": "ISC",
@@ -29,5 +30,8 @@
     "helmet": "^8.3.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.11.2"
+  },
+  "devDependencies": {
+    "newman": "^6.2.3"
   }
 }
