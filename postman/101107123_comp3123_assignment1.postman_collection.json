@@ -1,23 +1,133 @@
 {
   "info": {
-    "_postman_id": "9adcfd9b-290b-4cab-8230-d282927eb8ba",
+    "_postman_id": "b908b24e-513e-4c9a-a8e0-304070951ef9",
     "name": "101107123_comp3123_assignment1",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "58223392",
-    "_collection_link": "https://go.postman.co/collection/58223392-9adcfd9b-290b-4cab-8230-d282927eb8ba?source=collection_link"
+    "_collection_link": "https://go.postman.co/collection/58223392-b908b24e-513e-4c9a-a8e0-304070951ef9?source=collection_link"
   },
   "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health check",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"API is running\", () => pm.expect(pm.response.text()).to.include(\"API is running\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Unsupported route",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/does-not-exist",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "does-not-exist"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
     {
       "name": "User Signup",
       "item": [
         {
-          "name": "Invalid password",
+          "name": "Valid signup (user A)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Unique users for every run, so the collection can be run again without 409s",
+                  "const runId = Date.now();",
+                  "pm.collectionVariables.set(\"usernameA\", \"usera\" + runId);",
+                  "pm.collectionVariables.set(\"emailA\", \"usera\" + runId + \"@email.com\");",
+                  "pm.collectionVariables.set(\"usernameB\", \"userb\" + runId);",
+                  "pm.collectionVariables.set(\"emailB\", \"userb\" + runId + \"@email.com\");",
+                  "pm.collectionVariables.set(\"tokenA\", \"\");",
+                  "pm.collectionVariables.set(\"tokenB\", \"\");",
+                  "pm.collectionVariables.set(\"employeeId\", \"\");"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 201\", () => pm.response.to.have.status(201));",
+                  "const data = pm.response.json().data;",
+                  "pm.test(\"Returns the new user\", () => pm.expect(data.username).to.eql(pm.collectionVariables.get(\"usernameA\")));",
+                  "pm.test(\"Password is not returned\", () => pm.expect(data).to.not.have.property(\"password\"));"
+                ]
+              }
+            }
+          ],
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"username\": \"username\",\n    \"email\": \"user123@email.com\",\n    \"password\": \"password\"\n}\n",
+              "raw": "{\n    \"username\": \"{{usernameA}}\",\n    \"email\": \"{{emailA}}\",\n    \"password\": \"PasswordA123!\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -25,12 +135,10 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3020/api/v1/user/signup",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/api/v1/user/signup",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3020",
               "path": [
                 "api",
                 "v1",
@@ -42,44 +150,32 @@
           "response": []
         },
         {
-          "name": "Missing required fields",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"username\": \"username123\",\n    \"password\": \"PasswordA123!\"\n}\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
+          "name": "Valid signup (user B)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 201\", () => pm.response.to.have.status(201));"
+                ]
               }
-            },
-            "url": {
-              "raw": "http://localhost:3020/api/v1/user/signup",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3020",
-              "path": [
-                "api",
-                "v1",
-                "user",
-                "signup"
-              ]
             }
-          },
-          "response": []
-        },
-        {
-          "name": "Valid signup",
+          ],
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"username\": \"userB\",\n    \"email\": \"user_b@email.com\",\n    \"password\": \"PasswordB123!\"\n}\n",
+              "raw": "{\n    \"username\": \"{{usernameB}}\",\n    \"email\": \"{{emailB}}\",\n    \"password\": \"PasswordB123!\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -87,12 +183,10 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3020/api/v1/user/signup",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/api/v1/user/signup",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3020",
               "path": [
                 "api",
                 "v1",
@@ -105,43 +199,32 @@
         },
         {
           "name": "Duplicate username",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"username\": \"userA\",\n    \"email\": \"hello@email.com\",\n    \"password\": \"password123A!\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 409\", () => pm.response.to.have.status(409));",
+                  "pm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));"
+                ]
               }
-            },
-            "url": {
-              "raw": "http://localhost:3020/api/v1/user/signup",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3020",
-              "path": [
-                "api",
-                "v1",
-                "user",
-                "signup"
-              ]
             }
-          },
-          "response": []
-        },
-        {
-          "name": "Invalid email",
+          ],
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"username\": \"username\",\n    \"email\": \"hello\",\n    \"password\": \"PasswordA123!\"\n}\n",
+              "raw": "{\n    \"username\": \"{{usernameA}}\",\n    \"email\": \"other{{emailA}}\",\n    \"password\": \"PasswordA123!\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -149,12 +232,10 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3020/api/v1/user/signup",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/api/v1/user/signup",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3020",
               "path": [
                 "api",
                 "v1",
@@ -167,12 +248,32 @@
         },
         {
           "name": "Duplicate email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 409\", () => pm.response.to.have.status(409));",
+                  "pm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));"
+                ]
+              }
+            }
+          ],
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"username\": \"userB\",\n    \"email\": \"user_a@email.com\",\n    \"password\": \"PasswordA123!\"\n}\n",
+              "raw": "{\n    \"username\": \"other{{usernameA}}\",\n    \"email\": \"{{emailA}}\",\n    \"password\": \"PasswordA123!\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -180,12 +281,213 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3020/api/v1/user/signup",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/api/v1/user/signup",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3020",
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Invalid email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));",
+                  "pm.test(\"Error mentions email\", () => {",
+                  "    const errors = pm.response.json().errors || [];",
+                  "    pm.expect(errors.map(e => e.field)).to.include(\"email\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"invalidemail\",\n    \"email\": \"not-an-email\",\n    \"password\": \"PasswordA123!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user/signup",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Invalid password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));",
+                  "pm.test(\"Error mentions password\", () => {",
+                  "    const errors = pm.response.json().errors || [];",
+                  "    pm.expect(errors.map(e => e.field)).to.include(\"password\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"weakpassword\",\n    \"email\": \"weak@email.com\",\n    \"password\": \"password\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user/signup",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Missing required fields",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"missingfields\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user/signup",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Improper JSON",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400\", () => pm.response.to.have.status(400));\npm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"broken\",\n    \"email\": \"broken@email.com\"\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user/signup",
+              "host": [
+                "{{baseUrl}}"
+              ],
               "path": [
                 "api",
                 "v1",
@@ -202,13 +504,35 @@
       "name": "User Login",
       "item": [
         {
-          "name": "Valid username/password",
+          "name": "Valid username/password (user A)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Returns a JWT\", () => pm.expect(body.token).to.be.a(\"string\"));",
+                  "pm.collectionVariables.set(\"tokenA\", body.token);"
+                ]
+              }
+            }
+          ],
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"username\": \"userA\",\n    \"password\": \"PasswordA123!\"\n}\n",
+              "raw": "{\n    \"username\": \"{{usernameA}}\",\n    \"password\": \"PasswordA123!\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -216,12 +540,10 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3020/api/v1/user/login",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/api/v1/user/login",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3020",
               "path": [
                 "api",
                 "v1",
@@ -233,24 +555,33 @@
           "response": []
         },
         {
-          "name": "Valid email/password",
+          "name": "Valid email/password (user A)",
           "event": [
             {
               "listen": "test",
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  ""
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Returns a JWT\", () => pm.expect(pm.response.json().token).to.be.a(\"string\"));"
                 ]
               }
             }
           ],
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"email\": \"user_a@email.com\",\n    \"password\": \"PasswordA123!\"\n}",
+              "raw": "{\n    \"email\": \"{{emailA}}\",\n    \"password\": \"PasswordA123!\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -258,12 +589,61 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3020/api/v1/user/login",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/api/v1/user/login",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3020",
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Valid username/password (user B)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test(\"Returns a JWT\", () => pm.expect(body.token).to.be.a(\"string\"));",
+                  "pm.collectionVariables.set(\"tokenB\", body.token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"{{usernameB}}\",\n    \"password\": \"PasswordB123!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
               "path": [
                 "api",
                 "v1",
@@ -276,12 +656,32 @@
         },
         {
           "name": "Invalid credentials",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 401\", () => pm.response.to.have.status(401));",
+                  "pm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));"
+                ]
+              }
+            }
+          ],
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"username\": \"userB\",\n    \"password\": \"PasswordA123!\"\n}\n",
+              "raw": "{\n    \"username\": \"{{usernameA}}\",\n    \"password\": \"WrongPassword1!\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -289,12 +689,10 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3020/api/v1/user/login",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/api/v1/user/login",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3020",
               "path": [
                 "api",
                 "v1",
@@ -307,12 +705,32 @@
         },
         {
           "name": "Missing credentials",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));"
+                ]
+              }
+            }
+          ],
           "request": {
+            "auth": {
+              "type": "noauth"
+            },
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"password\": \"PasswordA123!\"\n}\n",
+              "raw": "{\n    \"password\": \"PasswordA123!\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -320,12 +738,10 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3020/api/v1/user/login",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/api/v1/user/login",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3020",
               "path": [
                 "api",
                 "v1",
@@ -337,32 +753,12 @@
           "response": []
         },
         {
-          "name": "Rate-limit behavior",
+          "name": "New Request",
           "request": {
-            "method": "POST",
+            "method": "GET",
             "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"username\": \"userA\",\n    \"password\": \"PasswordA123!\"\n}\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
             "url": {
-              "raw": "http://localhost:3020/api/v1/user/login",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3020",
-              "path": [
-                "api",
-                "v1",
-                "user",
-                "login"
-              ]
+              "raw": ""
             }
           },
           "response": []
@@ -373,23 +769,109 @@
       "name": "Employees",
       "item": [
         {
-          "name": "Valid employee",
+          "name": "Missing JWT",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 401\", () => pm.response.to.have.status(401));",
+                  "pm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/emp/employees",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "emp",
+                "employees"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Invalid JWT",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 401\", () => pm.response.to.have.status(401));",
+                  "pm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));"
+                ]
+              }
+            }
+          ],
           "request": {
             "auth": {
               "type": "bearer",
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{json_web_token_0y94}}",
+                  "value": "{{auth_secret_1dep}}",
                   "type": "string"
                 }
               ]
             },
-            "method": "POST",
+            "method": "GET",
             "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/emp/employees",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "emp",
+                "employees"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Valid employee",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 201\", () => pm.response.to.have.status(201));",
+                  "const data = pm.response.json().data;",
+                  "pm.test(\"Employee has an id\", () => pm.expect(data._id).to.be.a(\"string\"));",
+                  "pm.collectionVariables.set(\"employeeId\", data._id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"first_name\": \"Jane\",\n    \"last_name\": \"Doe\",\n    \"email\": \"jane.doe@company.com\",\n    \"position\": \"Software Developer\",\n    \"salary\": 200000,\n    \"date_of_joining\": \"2020-01-15\",\n    \"department\": \"Engineering\"\n}\n",
+              "raw": "{\n    \"first_name\": \"Jane\",\n    \"last_name\": \"Doe\",\n    \"email\": \"jane.doe@company.com\",\n    \"position\": \"Software Developer\",\n    \"salary\": 75000,\n    \"date_of_joining\": \"2024-03-15\",\n    \"department\": \"Engineering\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -397,12 +879,10 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3020/api/v1/emp/employees",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/api/v1/emp/employees",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3020",
               "path": [
                 "api",
                 "v1",
@@ -415,22 +895,33 @@
         },
         {
           "name": "Missing fields",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));",
+                  "pm.test(\"Error mentions department\", () => {",
+                  "    const errors = pm.response.json().errors || [];",
+                  "    pm.expect(errors.map(e => e.field)).to.include(\"department\");",
+                  "});"
+                ]
+              }
+            }
+          ],
           "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0y94}}",
-                  "type": "string"
-                }
-              ]
-            },
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"first_name\": \"Jane\",\n    \"last_name\": \"Doe\",\n    \"email\": \"jane.doe@company.com\",\n    \"position\": \"Software Developer\",\n    \"date_of_joining\": \"2020-01-15\",\n    \"department\": \"Engineering\"\n}\n",
+              "raw": "{\n    \"first_name\": \"Jane\",\n    \"last_name\": \"Doe\",\n    \"email\": \"jane.doe@company.com\",\n    \"position\": \"Software Developer\",\n    \"salary\": 75000,\n    \"date_of_joining\": \"2024-03-15\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -438,12 +929,10 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3020/api/v1/emp/employees",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/api/v1/emp/employees",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3020",
               "path": [
                 "api",
                 "v1",
@@ -456,22 +945,33 @@
         },
         {
           "name": "Invalid email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));",
+                  "pm.test(\"Error mentions email\", () => {",
+                  "    const errors = pm.response.json().errors || [];",
+                  "    pm.expect(errors.map(e => e.field)).to.include(\"email\");",
+                  "});"
+                ]
+              }
+            }
+          ],
           "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0y94}}",
-                  "type": "string"
-                }
-              ]
-            },
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"first_name\": \"Jane\",\n    \"last_name\": \"Doe\",\n    \"email\": \"jane\",\n    \"position\": \"Software Developer\",\n    \"salary\": 200000,\n    \"date_of_joining\": \"2020-01-15\",\n    \"department\": \"Engineering\"\n}\n",
+              "raw": "{\n    \"first_name\": \"Jane\",\n    \"last_name\": \"Doe\",\n    \"email\": \"jane.doe\",\n    \"position\": \"Software Developer\",\n    \"salary\": 75000,\n    \"date_of_joining\": \"2024-03-15\",\n    \"department\": \"Engineering\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -479,12 +979,10 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3020/api/v1/emp/employees",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/api/v1/emp/employees",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3020",
               "path": [
                 "api",
                 "v1",
@@ -497,22 +995,33 @@
         },
         {
           "name": "Invalid salary",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));",
+                  "pm.test(\"Error mentions salary\", () => {",
+                  "    const errors = pm.response.json().errors || [];",
+                  "    pm.expect(errors.map(e => e.field)).to.include(\"salary\");",
+                  "});"
+                ]
+              }
+            }
+          ],
           "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0y94}}",
-                  "type": "string"
-                }
-              ]
-            },
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"first_name\": \"Jane\",\n    \"last_name\": \"Doe\",\n    \"email\": \"jane.doe@company.com\",\n    \"position\": \"Software Developer\",\n    \"salary\": -222,\n    \"date_of_joining\": \"2020-01-15\",\n    \"department\": \"Engineering\"\n}\n",
+              "raw": "{\n    \"first_name\": \"Jane\",\n    \"last_name\": \"Doe\",\n    \"email\": \"jane.doe@company.com\",\n    \"position\": \"Software Developer\",\n    \"salary\": -500,\n    \"date_of_joining\": \"2024-03-15\",\n    \"department\": \"Engineering\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -520,12 +1029,10 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3020/api/v1/emp/employees",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/api/v1/emp/employees",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3020",
               "path": [
                 "api",
                 "v1",
@@ -538,22 +1045,33 @@
         },
         {
           "name": "Invalid date",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));",
+                  "pm.test(\"Error mentions date_of_joining\", () => {",
+                  "    const errors = pm.response.json().errors || [];",
+                  "    pm.expect(errors.map(e => e.field)).to.include(\"date_of_joining\");",
+                  "});"
+                ]
+              }
+            }
+          ],
           "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0y94}}",
-                  "type": "string"
-                }
-              ]
-            },
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"first_name\": \"Jane\",\n    \"last_name\": \"Doe\",\n    \"email\": \"jane.doe@company.com\",\n    \"position\": \"Software Developer\",\n    \"salary\": 200000,\n    \"date_of_joining\": \"2\",\n    \"department\": \"Engineering\"\n}\n",
+              "raw": "{\n    \"first_name\": \"Jane\",\n    \"last_name\": \"Doe\",\n    \"email\": \"jane.doe@company.com\",\n    \"position\": \"Software Developer\",\n    \"salary\": 75000,\n    \"date_of_joining\": \"15/03/2024\",\n    \"department\": \"Engineering\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -561,12 +1079,10 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3020/api/v1/emp/employees",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/api/v1/emp/employees",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3020",
               "path": [
                 "api",
                 "v1",
@@ -578,16 +1094,30 @@
           "response": []
         },
         {
-          "name": "Missing JWT",
+          "name": "Client sets owner",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));"
+                ]
+              }
+            }
+          ],
           "request": {
-            "auth": {
-              "type": "bearer"
-            },
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"first_name\": \"Jane\",\n    \"last_name\": \"Doe\",\n    \"email\": \"jane.doe@company.com\",\n    \"position\": \"Software Developer\",\n    \"salary\": 200000,\n    \"date_of_joining\": \"2020-01-15\",\n    \"department\": \"Engineering\"\n}\n",
+              "raw": "{\n    \"first_name\": \"Jane\",\n    \"last_name\": \"Doe\",\n    \"email\": \"jane.doe@company.com\",\n    \"position\": \"Software Developer\",\n    \"salary\": 75000,\n    \"date_of_joining\": \"2024-03-15\",\n    \"department\": \"Engineering\",\n    \"user\": \"000000000000000000000000\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -595,12 +1125,10 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3020/api/v1/emp/employees",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/api/v1/emp/employees",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3020",
               "path": [
                 "api",
                 "v1",
@@ -612,36 +1140,28 @@
           "response": []
         },
         {
-          "name": "Find all employees",
+          "name": "Get all employees",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "const ids = pm.response.json().data.map(e => e._id);",
+                  "pm.test(\"List contains the new employee\", () => pm.expect(ids).to.include(pm.collectionVariables.get(\"employeeId\")));"
+                ]
+              }
+            }
+          ],
           "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0y94}}",
-                  "type": "string"
-                }
-              ]
-            },
             "method": "GET",
             "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"first_name\": \"Jane\",\n    \"last_name\": \"Doe\",\n    \"email\": \"jane.doe@company.com\",\n    \"position\": \"Software Developer\",\n    \"salary\": 200000,\n    \"date_of_joining\": \"2020-01-15\",\n    \"department\": \"Engineering\"\n}\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
             "url": {
-              "raw": "http://localhost:3020/api/v1/emp/employees",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/api/v1/emp/employees",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3020",
               "path": [
                 "api",
                 "v1",
@@ -653,84 +1173,98 @@
           "response": []
         },
         {
-          "name": "Find employee by ID",
+          "name": "Get employee by id",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Returns the right employee\", () => pm.expect(pm.response.json().data._id).to.eql(pm.collectionVariables.get(\"employeeId\")));"
+                ]
+              }
+            }
+          ],
           "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0y94}}",
-                  "type": "string"
-                }
-              ]
-            },
             "method": "GET",
             "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"first_name\": \"Jane\",\n    \"last_name\": \"Doe\",\n    \"email\": \"jane.doe@company.com\",\n    \"position\": \"Software Developer\",\n    \"salary\": 200000,\n    \"date_of_joining\": \"2020-01-15\",\n    \"department\": \"Engineering\"\n}\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
             "url": {
-              "raw": "http://localhost:3020/api/v1/emp/employees/6ad53c012f62a3f20c03be8b",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/api/v1/emp/employees/{{employeeId}}",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3020",
               "path": [
                 "api",
                 "v1",
                 "emp",
                 "employees",
-                "6ad53c012f62a3f20c03be8b"
+                "{{employeeId}}"
               ]
             }
           },
           "response": []
         },
         {
-          "name": "Create employee",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0y94}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"john.doe@company.com\",\n    \"position\": \"Accountant\",\n    \"salary\": 500000,\n    \"date_of_joining\": \"2025-01-15\",\n    \"department\": \"Accounting\"\n}\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
+          "name": "Invalid employee id",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));"
+                ]
               }
-            },
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
             "url": {
-              "raw": "http://localhost:3020/api/v1/emp/employees/",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/api/v1/emp/employees/123",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3020",
               "path": [
                 "api",
                 "v1",
                 "emp",
                 "employees",
-                ""
+                "123"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Employee does not exist",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 404\", () => pm.response.to.have.status(404));\npm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/emp/employees/0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "emp",
+                "employees",
+                "0"
               ]
             }
           },
@@ -738,22 +1272,31 @@
         },
         {
           "name": "Update employee",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "const data = pm.response.json().data;",
+                  "pm.test(\"Salary was updated\", () => pm.expect(data.salary).to.eql(90000));",
+                  "pm.test(\"Position was updated\", () => pm.expect(data.position).to.eql(\"Senior Software Developer\"));"
+                ]
+              }
+            }
+          ],
           "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{json_web_token_0y94}}",
-                  "type": "string"
-                }
-              ]
-            },
             "method": "PUT",
-            "header": [],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"john.doe@company.com\",\n    \"position\": \"Accountant\",\n    \"salary\": 750000,\n    \"date_of_joining\": \"2025-01-15\",\n    \"department\": \"Accounting\"\n}\n",
+              "raw": "{\n    \"first_name\": \"Jane\",\n    \"last_name\": \"Doe\",\n    \"email\": \"jane.doe@company.com\",\n    \"position\": \"Senior Software Developer\",\n    \"salary\": 90000,\n    \"date_of_joining\": \"2024-03-15\",\n    \"department\": \"Engineering\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -761,41 +1304,142 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3020/api/v1/emp/employees/6ad541d93f779cbc61435ce7",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/api/v1/emp/employees/{{employeeId}}",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3020",
               "path": [
                 "api",
                 "v1",
                 "emp",
                 "employees",
-                "6ad541d93f779cbc61435ce7"
+                "{{employeeId}}"
               ]
             }
           },
           "response": []
         },
         {
-          "name": "Delete employee",
+          "name": "User B list is empty",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));",
+                  "const ids = pm.response.json().data.map(e => e._id);",
+                  "pm.test(\"User A's employee is not visible\", () => pm.expect(ids).to.not.include(pm.collectionVariables.get(\"employeeId\")));"
+                ]
+              }
+            }
+          ],
           "request": {
             "auth": {
               "type": "bearer",
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{json_web_token_0y94}}",
+                  "value": "{{tokenB}}",
                   "type": "string"
                 }
               ]
             },
-            "method": "DELETE",
+            "method": "GET",
             "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/emp/employees",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "emp",
+                "employees"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Find another users employee",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 403\", () => pm.response.to.have.status(403));",
+                  "pm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenB}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/emp/employees/{{employeeId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "emp",
+                "employees",
+                "{{employeeId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update another users employee",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 403\", () => pm.response.to.have.status(403));",
+                  "pm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenB}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"john.doe@company.com\",\n    \"position\": \"Accountant\",\n    \"salary\": 750000,\n    \"date_of_joining\": \"2025-01-15\",\n    \"department\": \"Accounting\"\n}\n",
+              "raw": "{\n    \"first_name\": \"Jane\",\n    \"last_name\": \"Doe\",\n    \"email\": \"jane.doe@company.com\",\n    \"position\": \"Software Developer\",\n    \"salary\": 75000,\n    \"date_of_joining\": \"2024-03-15\",\n    \"department\": \"Engineering\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -803,12 +1447,53 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3020/api/v1/emp/employees?eid=6ad542523f779cbc61435ce8",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/api/v1/emp/employees/{{employeeId}}",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "3020",
+              "path": [
+                "api",
+                "v1",
+                "emp",
+                "employees",
+                "{{employeeId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete another users employee",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 403\", () => pm.response.to.have.status(403));",
+                  "pm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenB}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/emp/employees?eid={{employeeId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
               "path": [
                 "api",
                 "v1",
@@ -818,7 +1503,7 @@
               "query": [
                 {
                   "key": "eid",
-                  "value": "6ad542523f779cbc61435ce8"
+                  "value": "{{employeeId}}"
                 }
               ]
             }
@@ -826,12 +1511,147 @@
           "response": []
         },
         {
-          "name": "Find another users employee",
+          "name": "Delete employee",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 204\", () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ],
           "request": {
-            "method": "GET",
+            "method": "DELETE",
             "header": [],
             "url": {
-              "raw": ""
+              "raw": "{{baseUrl}}/api/v1/emp/employees?eid={{employeeId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "emp",
+                "employees"
+              ],
+              "query": [
+                {
+                  "key": "eid",
+                  "value": "{{employeeId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete employee again",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/emp/employees?eid={{employeeId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "emp",
+                "employees"
+              ],
+              "query": [
+                {
+                  "key": "eid",
+                  "value": "{{employeeId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Rate Limit",
+      "item": [
+        {
+          "name": "Rate-limit behavior",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Send 20 quick logins so the next request goes over the limit (20 per 15 minutes)",
+                  "for (let i = 0; i < 20; i++) {",
+                  "    pm.sendRequest({",
+                  "        url: pm.collectionVariables.get(\"baseUrl\") + \"/api/v1/user/login\",",
+                  "        method: \"POST\",",
+                  "        header: { \"Content-Type\": \"application/json\" },",
+                  "        body: { mode: \"raw\", raw: JSON.stringify({ username: \"ratelimit\", password: \"x\" }) }",
+                  "    });",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 429\", () => pm.response.to.have.status(429));",
+                  "pm.test(\"success is false\", () => pm.expect(pm.response.json().success).to.eql(false));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"ratelimit\",\n    \"password\": \"x\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "login"
+              ]
             }
           },
           "response": []
@@ -839,13 +1659,51 @@
       ]
     }
   ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{tokenA}}",
+        "type": "string"
+      }
+    ]
+  },
   "variable": [
     {
-      "key": "json_web_token_0y94",
-      "secret": true
+      "key": "baseUrl",
+      "value": "http://localhost:3020"
     },
     {
-      "key": "json_web_token_0qey",
+      "key": "usernameA",
+      "value": ""
+    },
+    {
+      "key": "emailA",
+      "value": ""
+    },
+    {
+      "key": "usernameB",
+      "value": ""
+    },
+    {
+      "key": "emailB",
+      "value": ""
+    },
+    {
+      "key": "tokenA",
+      "value": ""
+    },
+    {
+      "key": "tokenB",
+      "value": ""
+    },
+    {
+      "key": "employeeId",
+      "value": ""
+    },
+    {
+      "key": "auth_secret_1dep",
       "secret": true
     }
   ]
