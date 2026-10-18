@@ -16,6 +16,13 @@ app.use(helmet());
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/emp", employeeRoutes);
 
+app.get("/health", (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: "API is running"
+    });
+});
+
 app.use(notFound);
 app.use(errorHandler);
 
