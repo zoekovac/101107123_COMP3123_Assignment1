@@ -3,11 +3,13 @@ const helmet = require("helmet");
 
 const userRoutes = require("./routes/userRoutes");
 const employeeRoutes = require("./routes/employeeRoutes");
+const requestLogger = require("./middleware/requestLogger");
 const notFound = require("./middleware/notFound");
 const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
 
+app.use(requestLogger);
 app.use(express.json());
 app.use(helmet());
 
@@ -18,4 +20,3 @@ app.use(notFound);
 app.use(errorHandler);
 
 module.exports = app;
-

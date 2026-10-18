@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const appError = require("../utils/appError");
 const { signToken } = require("../utils/token");
+const logger = require("../utils/logger");
 
 const signup = async (req, res) => {
     const { username, email, password } = req.body;
@@ -8,10 +9,13 @@ const signup = async (req, res) => {
     const existingUser = await User.exists({ $or: [{ username }, { email }] });
 
     if (existingUser) {
+        logger.warn("signup_conflict", { username, ip: req.ip });
         throw new appError(409, "Username or email already exists");
     }
 
     const user = await User.create({ username, email, password });
+
+    logger.info("signup_success", { user_id: user._id.toString(), username: user.username });
 
     res.status(201).json({
         success: true,
@@ -34,8 +38,15 @@ const login = async (req, res) => {
     const isMatch = user ? await user.comparePassword(password) : false;
 
     if (!isMatch) {
-        throw new AppError(401, "Invalid credentials");
+        logger.warn("login_failed", {
+            login_with: username ? "username" : "email",
+            reason: user ? "wrong_password" : "unknown_user",
+            ip: req.ip
+        });
+        throw new appError(401, "Invalid credentials");
     }
+
+    logger.info("login_success", { user_id: user._id.toString(), ip: req.ip });
 
     res.status(200).json({
         success: true,

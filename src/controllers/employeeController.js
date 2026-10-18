@@ -1,5 +1,5 @@
 const Employee = require("../models/Employee");
-const AppError = require("../utils/AppError");
+const appError = require("../utils/appError");
 const { getCache, setCache, deleteCache } = require("../services/cacheService");
 
 const CACHE_SECONDS = 60;
@@ -19,11 +19,11 @@ const findOwnedEmployee = async (employeeId, userId) => {
     const employee = await Employee.findById(employeeId);
 
     if (!employee) {
-        throw new AppError(404, "Employee not found");
+        throw new appError(404, "Employee not found");
     }
 
     if (employee.user.toString() !== userId) {
-        throw new AppError(403, "You do not have access to this employee");
+        throw new appError(403, "You do not have access to this employee");
     }
 
     return employee;
