@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const AppError = require("../utils/AppError");
+const appError = require("../utils/appError");
 const { signToken } = require("../utils/token");
 
 const signup = async (req, res) => {
@@ -8,7 +8,7 @@ const signup = async (req, res) => {
     const existingUser = await User.exists({ $or: [{ username }, { email }] });
 
     if (existingUser) {
-        throw new AppError(409, "Username or email already exists");
+        throw new appError(409, "Username or email already exists");
     }
 
     const user = await User.create({ username, email, password });
