@@ -1,7 +1,7 @@
 const express = require("express");
 
 const authenticate = require("../middleware/auth");
-const validateRequest = require("../validators/validateRequest");
+const validateRequest = require("../validators/requestValidator");
 const {
     employeeValidation,
     employeeIdParam,
