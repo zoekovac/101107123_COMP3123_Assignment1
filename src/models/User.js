@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema(
     {
@@ -28,10 +29,13 @@ const userSchema = new mongoose.Schema(
             required: [true, "Password is required"],
             minlength: [8, "Password must be at least 8 characters"],
             select: false,
-            match: [
-                /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$/,
-                "Password must contain 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character"
-            ]
+            validate: {
+                validator: function (value) {
+                    if (!this.isModified("password")) return true;
+                    return /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$/.test(value);
+                },
+                message: "Password must contain 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character"
+            }
         }
     },
     {
@@ -42,9 +46,28 @@ const userSchema = new mongoose.Schema(
     }
 );
 
-// TODO: add password hashing with bcrypt
-// TODO: password must never be stored as plain text
-// TODO: password must be hashed before being stored in MongoDB
-// TODO: do not return the user's hashed password in API responses
+// Hash password before saving it to the database
+userSchema.pre("save", async function () {
+
+    if (!this.isModified("password")) {
+        return;
+    }
+
+    // Generate a secure bcrypt hash
+    const saltRounds = 10;
+    this.password = await bcrypt.hash(this.password, saltRounds);
+});
+
+// Compare login password with stored hashed password
+userSchema.methods.comparePassword = async function (passwordInput) {
+    return bcrypt.compare(passwordInput, this.password);
+};
+
+// Remove password when converting user document to JSON
+userSchema.methods.toJSON = function () {
+    const user = this.toObject();
+    delete user.password;
+    return user;
+};
 
 module.exports = mongoose.model("User", userSchema);
