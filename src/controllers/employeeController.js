@@ -74,7 +74,7 @@ const updateEmployee = async (req, res) => {
     const employee = await findOwnedEmployee(req.params.eid, req.user.id);
 
     employee.set(pickEmployeeFields(req.body));
-    await employee.save(); // runs schema validation
+    await employee.save();
 
     await deleteCache(listCacheKey(req.user.id));
 
