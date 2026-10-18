@@ -1,0 +1,140 @@
+{"timestamp":"2026-10-18T21:15:11.511Z","level":"info","event":"signup_success","user_id":"6ad536df17a8a222ab8c88e9","username":"usera"}
+{"timestamp":"2026-10-18T21:15:11.514Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":201,"duration_ms":132,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:16:30.236Z","level":"warn","event":"signup_conflict","username":"usera","ip":"::1"}
+{"timestamp":"2026-10-18T21:16:30.237Z","level":"error","event":"application_error","method":"POST","path":"/api/v1/user/signup","status":500,"reason":"Internal server error","user_id":null,"ip":"::1","error":"Username or email already exists","stack":"appError: Username or email already exists\n    at signup (/Users/zoekovac/101107123_comp3123_assignment1/src/controllers/userController.js:13:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"}
+{"timestamp":"2026-10-18T21:16:30.238Z","level":"error","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":500,"duration_ms":12,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:16:32.934Z","level":"warn","event":"signup_conflict","username":"usera","ip":"::1"}
+{"timestamp":"2026-10-18T21:16:32.935Z","level":"error","event":"application_error","method":"POST","path":"/api/v1/user/signup","status":500,"reason":"Internal server error","user_id":null,"ip":"::1","error":"Username or email already exists","stack":"appError: Username or email already exists\n    at signup (/Users/zoekovac/101107123_comp3123_assignment1/src/controllers/userController.js:13:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"}
+{"timestamp":"2026-10-18T21:16:32.936Z","level":"error","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":500,"duration_ms":9,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:16:35.616Z","level":"warn","event":"signup_conflict","username":"usera","ip":"::1"}
+{"timestamp":"2026-10-18T21:16:35.616Z","level":"error","event":"application_error","method":"POST","path":"/api/v1/user/signup","status":500,"reason":"Internal server error","user_id":null,"ip":"::1","error":"Username or email already exists","stack":"appError: Username or email already exists\n    at signup (/Users/zoekovac/101107123_comp3123_assignment1/src/controllers/userController.js:13:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"}
+{"timestamp":"2026-10-18T21:16:35.616Z","level":"error","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":500,"duration_ms":5,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:16:48.445Z","level":"warn","event":"signup_conflict","username":"usera","ip":"::1"}
+{"timestamp":"2026-10-18T21:16:48.445Z","level":"error","event":"application_error","method":"POST","path":"/api/v1/user/signup","status":500,"reason":"Internal server error","user_id":null,"ip":"::1","error":"Username or email already exists","stack":"appError: Username or email already exists\n    at signup (/Users/zoekovac/101107123_comp3123_assignment1/src/controllers/userController.js:13:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"}
+{"timestamp":"2026-10-18T21:16:48.446Z","level":"error","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":500,"duration_ms":11,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:17:26.604Z","level":"warn","event":"signup_conflict","username":"userb","ip":"::1"}
+{"timestamp":"2026-10-18T21:17:26.604Z","level":"error","event":"application_error","method":"POST","path":"/api/v1/user/signup","status":500,"reason":"Internal server error","user_id":null,"ip":"::1","error":"Username or email already exists","stack":"appError: Username or email already exists\n    at signup (/Users/zoekovac/101107123_comp3123_assignment1/src/controllers/userController.js:13:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"}
+{"timestamp":"2026-10-18T21:17:26.605Z","level":"error","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":500,"duration_ms":10,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:17:53.004Z","level":"warn","event":"validation_failed","method":"POST","path":"/api/v1/user/signup","fields":["email"]}
+{"timestamp":"2026-10-18T21:17:53.005Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":400,"duration_ms":4,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:18:26.346Z","level":"warn","event":"validation_failed","method":"POST","path":"/api/v1/user/signup","fields":["password"]}
+{"timestamp":"2026-10-18T21:18:26.347Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":400,"duration_ms":3,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:19:04.960Z","level":"warn","event":"validation_failed","method":"POST","path":"/api/v1/user/signup","status":400,"reason":"Malformed JSON in request body","user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:19:04.961Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":400,"duration_ms":3,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:19:12.822Z","level":"warn","event":"validation_failed","method":"POST","path":"/api/v1/user/signup","fields":["password"]}
+{"timestamp":"2026-10-18T21:19:12.823Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":400,"duration_ms":3,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:19:19.555Z","level":"warn","event":"validation_failed","method":"POST","path":"/api/v1/user/signup","fields":["email","password"]}
+{"timestamp":"2026-10-18T21:19:19.556Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":400,"duration_ms":4,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:19:23.952Z","level":"warn","event":"validation_failed","method":"POST","path":"/api/v1/user/signup","fields":["username","email","password"]}
+{"timestamp":"2026-10-18T21:19:23.953Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":400,"duration_ms":3,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:19:32.286Z","level":"warn","event":"validation_failed","method":"POST","path":"/api/v1/user/signup","status":400,"reason":"Malformed JSON in request body","user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:19:32.287Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":400,"duration_ms":1,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:19:45.328Z","level":"warn","event":"validation_failed","method":"POST","path":"/api/v1/user/signup","fields":["username","email","password"]}
+{"timestamp":"2026-10-18T21:19:45.329Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":400,"duration_ms":3,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:21:25.601Z","level":"warn","event":"http_request","method":"GET","path":"/api/v1/user/login","status":404,"duration_ms":1,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:25:21.315Z","level":"warn","event":"signup_conflict","username":"usera","ip":"::1"}
+{"timestamp":"2026-10-18T21:25:21.318Z","level":"warn","event":"conflict","method":"POST","path":"/api/v1/user/signup","status":409,"reason":"Username or email already exists","user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:25:21.320Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":409,"duration_ms":75,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:25:24.182Z","level":"warn","event":"signup_conflict","username":"userb","ip":"::1"}
+{"timestamp":"2026-10-18T21:25:24.182Z","level":"warn","event":"conflict","method":"POST","path":"/api/v1/user/signup","status":409,"reason":"Username or email already exists","user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:25:24.182Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":409,"duration_ms":114,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:26:41.822Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:26:41.828Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":153,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:27:12.422Z","level":"warn","event":"http_request","method":"GET","path":"/api/v1/user/login","status":404,"duration_ms":1,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:27:16.292Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:27:16.293Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":182,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:27:38.906Z","level":"warn","event":"http_request","method":"GET","path":"/api/v1/user/login","status":404,"duration_ms":1,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:27:45.292Z","level":"warn","event":"login_failed","login_with":"username","reason":"unknown_user","ip":"::1"}
+{"timestamp":"2026-10-18T21:27:45.293Z","level":"warn","event":"authentication_failed","method":"POST","path":"/api/v1/user/login","status":401,"reason":"Invalid credentials","user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:27:45.294Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/user/login","status":401,"duration_ms":10,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:28:06.051Z","level":"warn","event":"http_request","method":"GET","path":"/api/v1/user/login","status":404,"duration_ms":2,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:28:10.207Z","level":"warn","event":"validation_failed","method":"POST","path":"/api/v1/user/login","fields":["body"]}
+{"timestamp":"2026-10-18T21:28:10.207Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/user/login","status":400,"duration_ms":2,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:28:26.171Z","level":"warn","event":"validation_failed","method":"POST","path":"/api/v1/user/signup","status":400,"reason":"Malformed JSON in request body","user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:28:26.172Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":400,"duration_ms":1,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:28:31.380Z","level":"warn","event":"validation_failed","method":"POST","path":"/api/v1/user/signup","fields":["email","password"]}
+{"timestamp":"2026-10-18T21:28:31.380Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":400,"duration_ms":1,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:29:06.194Z","level":"warn","event":"validation_failed","method":"POST","path":"/api/v1/user/signup","fields":["email"]}
+{"timestamp":"2026-10-18T21:29:06.194Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":400,"duration_ms":1,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:29:42.034Z","level":"warn","event":"http_request","method":"GET","path":"/api/v1/user/login","status":404,"duration_ms":0,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:29:42.927Z","level":"warn","event":"http_request","method":"GET","path":"/api/v1/user/login","status":404,"duration_ms":1,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:29:45.440Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:29:45.441Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":100,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:29:46.360Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:29:46.361Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":102,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:29:47.114Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:29:47.116Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":117,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:29:47.864Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:29:47.865Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":105,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:29:48.501Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:29:48.502Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":78,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:29:49.099Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:29:49.101Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":101,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:29:49.623Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:29:49.624Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":81,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:29:50.217Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:29:50.218Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":85,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:29:50.810Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:29:50.811Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":95,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:29:51.384Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:29:51.385Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":83,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:29:52.021Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:29:52.023Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":149,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:29:52.583Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:29:52.584Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":136,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:29:53.057Z","level":"warn","event":"rate_limit_exceeded","path":"/api/v1/user/login","ip":"::1"}
+{"timestamp":"2026-10-18T21:29:53.057Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/user/login","status":429,"duration_ms":1,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:29:53.657Z","level":"warn","event":"rate_limit_exceeded","path":"/api/v1/user/login","ip":"::1"}
+{"timestamp":"2026-10-18T21:29:53.657Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/user/login","status":429,"duration_ms":1,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:32:58.290Z","level":"warn","event":"rate_limit_exceeded","path":"/api/v1/user/signup","ip":"::1"}
+{"timestamp":"2026-10-18T21:32:58.290Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":429,"duration_ms":0,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:34:36.040Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:34:36.044Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":112,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:37:05.466Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/emp/employees","status":201,"duration_ms":75,"user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:38:37.856Z","level":"warn","event":"validation_failed","method":"POST","path":"/api/v1/emp/employees","fields":["salary"]}
+{"timestamp":"2026-10-18T21:38:37.856Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/emp/employees","status":400,"duration_ms":4,"user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:39:08.117Z","level":"warn","event":"validation_failed","method":"POST","path":"/api/v1/emp/employees","fields":["email"]}
+{"timestamp":"2026-10-18T21:39:08.118Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/emp/employees","status":400,"duration_ms":34,"user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:39:36.739Z","level":"warn","event":"validation_failed","method":"POST","path":"/api/v1/emp/employees","fields":["salary"]}
+{"timestamp":"2026-10-18T21:39:36.741Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/emp/employees","status":400,"duration_ms":7,"user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:39:49.514Z","level":"warn","event":"validation_failed","method":"POST","path":"/api/v1/emp/employees","fields":["date_of_joining"]}
+{"timestamp":"2026-10-18T21:39:49.518Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/emp/employees","status":400,"duration_ms":11,"user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:40:01.651Z","level":"warn","event":"authentication_failed","method":"POST","path":"/api/v1/emp/employees","status":401,"reason":"Authentication token is missing","user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:40:01.651Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/emp/employees","status":401,"duration_ms":1,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:43:20.418Z","level":"warn","event":"signup_conflict","username":"usera","ip":"::1"}
+{"timestamp":"2026-10-18T21:43:20.420Z","level":"warn","event":"conflict","method":"POST","path":"/api/v1/user/signup","status":409,"reason":"Username or email already exists","user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:43:20.421Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":409,"duration_ms":35,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:43:30.503Z","level":"info","event":"signup_success","user_id":"6ad53d824bc7e660e01efc5e","username":"userb"}
+{"timestamp":"2026-10-18T21:43:30.504Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/signup","status":201,"duration_ms":109,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:45:40.298Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:45:40.300Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":96,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:45:40.621Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:45:40.910Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:45:41.203Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:45:41.467Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:45:41.777Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:45:42.102Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:45:42.427Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:45:42.752Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:45:42.752Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":96,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:45:43.094Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:45:43.095Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":105,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:45:43.426Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:45:43.427Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":101,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:45:43.739Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:45:43.740Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":93,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:45:44.046Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:45:44.047Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":100,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:45:44.374Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:45:44.375Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":92,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:45:44.760Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:45:45.077Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:45:45.078Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":95,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:45:45.436Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:45:45.436Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":103,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:45:45.763Z","level":"info","event":"login_success","user_id":"6ad536df17a8a222ab8c88e9","ip":"::1"}
+{"timestamp":"2026-10-18T21:45:45.763Z","level":"info","event":"http_request","method":"POST","path":"/api/v1/user/login","status":200,"duration_ms":94,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:45:46.003Z","level":"warn","event":"rate_limit_exceeded","path":"/api/v1/user/login","ip":"::1"}
+{"timestamp":"2026-10-18T21:45:46.003Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/user/login","status":429,"duration_ms":2,"user_id":null,"ip":"::1"}
+{"timestamp":"2026-10-18T21:45:46.375Z","level":"warn","event":"rate_limit_exceeded","path":"/api/v1/user/login","ip":"::1"}
+{"timestamp":"2026-10-18T21:45:46.377Z","level":"warn","event":"http_request","method":"POST","path":"/api/v1/user/login","status":429,"duration_ms":3,"user_id":null,"ip":"::1"}
