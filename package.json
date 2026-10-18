@@ -1,7 +1,7 @@
 {
   "name": "101107123_comp3123_assignment1",
   "version": "1.0.0",
-  "description": "",
+  "description": "Employee management application with RESTful API security",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Zoë Kovac",
   "license": "ISC",
   "type": "commonjs",
   "repository": {
